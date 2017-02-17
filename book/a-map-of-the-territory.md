@@ -1,27 +1,27 @@
 ^title Карта территории
 ^part Добро пожаловать
 
-> You must have a map, no matter how rough. Otherwise you wander all over the
-> place. In The Lord of the Rings I never made anyone go farther than he could
-> on a given day.
+> У вас должна быть карта, неважно, насколько грубая. Иначе вы будете бродить
+> повсюду. Во "Властелине Колец" я никогда не заставлял никого пройти дальше,
+> чем он мог в определенный день.
 >
-> <cite>J.R.R. Tolkien</cite>
+> <cite>Дж.Р.Р. Толкиен</cite>
 
-We don't want to wander all over the place, so before we set off, let's scan
-the territory charted by previous language implementers. It will help us
-understand where we are going and alternate routes others take.
+Мы не хотим бродить повсюду, поэтому, прежде чем мы отправимся в путь, давайте
+просканируем территорию, намеченную предыдущими создателями языков. Это поможет
+нам понять, куда мы направляемся и какими альтернативными маршрутами пользуются другие.
 
-First, let me establish a shorthand. Much of this book is about a language's
-*implementation*, which is distinct from the *language itself* in some sort of
-Platonic ideal form. Things like "stack", "bytecode", and "recursive descent",
-are nuts and bolts one particular implementation might use. From the user's
-perspective, as long as the resulting contraption faithfully follows the
-language's specification, it's all implementation detail.
+Для начала позвольте мне обозначить определения. Большая часть этой книги посвящена
+*реализации*, которая отличается от *самого языка*, представленного в виде какой-то
+Платоновской идеальной формы. Такие вещи как "стек", "байткод" и "метод рекурсивного спуска"
+являются гайками и болтами, которые может использовать определенная реализация. С точки зрения
+пользователя, до тех пор пока результирующая вещь честно следует спецификации языка,
+это всё – детали реализации.
 
-We're going to spend a lot of time on those details, so if I have to write
-"language *implementation*" every single time I mention them, I'll wear my
-fingers off. Instead, I'll use "language" to refer to either a language or an
-implementation of it, or both, unless the distinction isn't obvious.
+Мы собираемся потратить много времени на эти детали, так что если я буду писать
+"*реализация* языка" каждый раз, когда их упоминаю, я сотру свои пальцы.
+Вместо этого я буду использовать термин "язык" для обращения или к языку, или к его реализации
+или к ним обоим, если различия не являются очевидными.
 
 ## The Parts of a Language
 
