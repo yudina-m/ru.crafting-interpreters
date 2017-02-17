@@ -1,5 +1,5 @@
-^title A Map of the Territory
-^part Welcome
+^title Карта территории
+^part Добро пожаловать
 
 > You must have a map, no matter how rough. Otherwise you wander all over the
 > place. In The Lord of the Rings I never made anyone go farther than he could
