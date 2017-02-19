@@ -23,78 +23,77 @@
 Вместо этого я буду использовать термин "язык" для обращения либо к языку, либо к его реализации,
 либо к ним обоим, если различия не очевидны.
 
-## The Parts of a Language
+## Части языка
 
-Engineers have been building programming languages since the Dark Ages of
-computing. As soon as we could talk to computers, we discovered doing so was too
-hard, and we enlisted their help. I find it fascinating that even though today's
-machines are literally a million times faster and have orders of magnitude more
-storage, the way we build programming languages is virtually unchanged.
+Инженеры создавали языки программирования с Темных Времен
+вычислений(?). Как только мы смогли разговаривать с компьютерами и обнаружили, что делать это чрезвычайно
+сложно, мы заручились их (прим. компьютеров) помощью. Я нахожу захватывающим, что даже несмотря на то, что сегодняшние
+машины буквально в миллион раз быстрее и имеют на порядок больше места
+хранения, способ создания компьютерных языков практичесик не изменился.
 
-Though the territory covered by languages designers is vast, the trails they've
-carved through it are <span name="dead">few</span>. Not every language takes the
-exact same path -- some take a shortcut or two -- but otherwise they are
-reassuringly similar from Rear Admiral Grace Hopper's first COBOL compiler all
-the way to some hot new transpile-to-JavaScript language whose "documentation"
-consists entirely of a single poorly-edited README in a Git repository
-somewhere.
+Хотя территория, охваченная дизайнерами языков огромна, следы, которые они оставили
+на ней <span name="dead">невелики</span>. Не каждый язык проходит один
+и тот же путь -- некоторые сокращают путь тут или там -- но в остальном они
+успокоительно похожи с первого COBOL компилятора контр-адмирала Грейс Хоппер до
+самого горячего нового языка транспиллера-в-JavaScript, чья "документация"
+состоит полностью из плохо отредактированного README где-то в Git репозитории.
 
 <aside name="dead">
 
-Though there are certainly dead ends, sad little cul-de-sacs of CS papers with
-zero citations and now-forgotten optimizations that only made sense when memory
-was measured in individual bytes.
+Хотя, конечно же, существуют и тупики, грустные маленькие cul-de-sacs CS работ с
+нулевой цитируемостью и ныне забытыми оптимизациями, которые имели смысл только когда
+память измерялась в индивидуальных байтах.
 
 </aside>
 
-I visualize the network of paths an implementation may choose as climbing a
-mountain. You start off at the bottom with the program as raw source text,
-literally just a string of characters. Each phase analyzes the program and
-transforms it to some higher-level representation where the semantics -- what
-the author wants the computer to do -- becomes more apparent.
+Я визуализирую сеть путей, которые может выбрать реализация, как восхождение на гору.
+Вы начинаете внизу с программой в виде исходного текста,
+буквально в виде строки символов. Каждая фаза анализирует программу и
+превращает ее в более высокоуровневое представление, где семантика -- то,
+что автор хочет, чтобы сделал компьютер -- становится более очевидной.
 
-Eventually we reach the peak. We have a bird's-eye view of the users's program
-and can see what their code *means*. Next, we descend the other side of the
-mountain. We transform from this highest-level representation down to
-successively lower-level forms to get closer and closer to something we know how
-to make the CPU actually execute.
+В конце концов мы достигаем вершины. У нас есть вид с высоты птичьего полета на программу пользователя
+и мы может видеть, что *означает* их код. Затем мы спускаемся по другой части горы.
+Мы преобразуем самое высокоуровневое представление последовательно вплоть до форм на более низком
+уровне, становясь все ближе и ближе к чему-то, что мы знаем как заставить
+процессор (CPU) на самом деле выполнить.
 
 <img src="image/a-map-of-the-territory/mountain.png" alt="The branching paths a language may take over the mountain." class="wide" />
 
-Let's trace through each of those trails and points of interest. Our journey
-begins on the left with the bare text of the user's source code:
+Давайте пройдем через каждый из этих маршрутов и достопримечательностей. Наше путешествие
+начинается слева с голого текста исходного кода пользователя:
 
 <img src="image/a-map-of-the-territory/string.png" alt="var average = (min + max) / 2;" />
 
-### Scanning
+### Сканирование (Scanning)
 
-The first step is **scanning**, also known as **lexing**, or (if you're trying
-to impress someone) **lexical analysis**. They all mean the pretty much same
-thing. I like "lexing" because it sounds like something an evil supervillain
-would do, but I'll use "scanning" because it seems to be marginally more
-commonplace.
+Первый шаг – это **сканирование (scanning)**, также известное как **лексинг (lexing)**, или
+(если вы пытаетесь кого-то впечатлить) **лексический анализ**. Они все означают практически
+одно и то же. Я предпочитаю "лексинг (lexing)", потому что это звучит как что-то, что мог бы сделать
+суперзлодей, но я буду использовать "сканирование (scanning)", потому что это, кажется,
+немного более распространено.
 
-A **scanner** (or **"lexer"**) takes in the linear stream of characters and
-chunks them together into a series of something more akin to <span
-name="word">"words"</span>. In programming languages, each of these words is
-called a **token**. Some tokens are single characters, like `(` and `,`. Others
-may be several characters long, like numbers (`123`), string literals (`"hi!"`),
-and identifiers (`min`).
+**Сканер (scanner)** (или **"лексер (lexer)"**) принимает на вход линейный поток символов
+и объединяет их вместе в серии чего-то более похожего на <span
+name="word">"слова"</span>. В языках программирования каждое из этих слов
+называется **токен (token)**. Некоторые токены (tokens) - это один символ, например, `(` и `,`. Другие
+могут состоять из нескольких символов, таких как числа (`123`), строки (`"hi!"`)
+и идентификаторы (`min`).
 
 <aside name="word">
 
-"Lexical" comes from the Greek root "lex", meaning "word".
+"Лексический (Lexical)" происходит от Греческого "lex", означающего "слово".
 
 </aside>
 
-Some characters in a source file don't actually mean anything. Whitespace is
-often insignificant and comments, by definition, are ignored by the language.
-The scanner usually discards these, leaving a clean sequence of meaningful
-tokens.
+Некоторые символы в исходном файле не означают ничего. Пробелы обычно
+не важны и комментарии, по определению, игнорируются языком.
+Сканер (scanner) обычно отбрасывает их, оставляя чистую последовательность
+значимых токенов (tokens).
 
 <img src="image/a-map-of-the-territory/tokens.png" alt="[var] [average] [=] [(] [min] [+] [max] [)] [/] [2] [;]" />
 
-### Parsing
+### Парсинг (Parsing)
 
 The next step is **parsing**. This is where our syntax gets a **grammar** -- the
 ability to compose larger expressions and statements out of smaller parts. Did
